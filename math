@@ -1,0 +1,58 @@
+s = "A"
+sumHours = 0
+sumPoints = 0
+ch = 4
+gpa = 1.5
+def GPA (s, sumHours, sumPoints, ch):
+    sumHours += ch
+    if s=='A+':
+        gpa = ch*4.0
+        sumPoints += gpa
+        return gpa, sumHours, sumPoints
+    elif s=='A':
+        gpa = ch*4.0
+        sumPoints += gpa
+        print(sumPoints)
+        return gpa, sumHours, sumPoints
+    elif s=='A-':
+        gpa = ch*3.7
+        sumPoints += gpa
+        return gpa, sumHours, sumPoints
+    elif s=='B+':
+        gpa = ch*3.3
+        sumPoints += gpa
+        return gpa, sumHours, sumPoints
+    elif s=='B':
+        gpa = ch*3.0
+        sumPoints += gpa
+        return gpa, sumHours, sumPoints
+    elif s=='B-':
+        gpa = ch*2.7
+        sumPoints += gpa
+        return gpa, sumHours, sumPoints
+    elif s=='C+':
+        gpa = ch*2.3
+        sumPoints += gpa
+        return gpa, sumHours, sumPoints
+    elif s=='C':
+        gpa = ch*2.0
+        sumPoints += gpa
+        return gpa, sumHours, sumPoints
+    elif s=='C-':
+        gpa = ch*1.7
+        sumPoints += gpa
+        return gpa, sumHours, sumPoints
+    elif s=='D+':
+        gpa = ch*1.3
+        sumPoints += gpa
+        return gpa, sumHours, sumPoints
+    elif s=='D':
+        gpa = ch*1.0
+        sumPoints += gpa
+        return gpa, sumHours, sumPoints
+    elif s=='F':
+        gpa = ch*0
+        sumPoints += gpa
+        return gpa, sumHours, sumPoints
+        
+#for length of file, run GPA function
