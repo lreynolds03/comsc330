@@ -5,7 +5,7 @@ import numpy as np  # Needed for mathematical operations such as square root
 
 # Define the paths to the data directories
 # Realtive path to the data directory
-base_path = './COMSC330_Project/Data'
+base_path = './GPA_calc/Data'
 # Absolute path to the data directory
 #base_path = '/Users/kocki/Desktop/PYTHON/COMSC330_Project/Data'
 sections_path = os.path.join(base_path, 'Sections')
@@ -40,10 +40,10 @@ def perform_z_test(sample_mean, population_mean, population_std, n):
     z_score = (sample_mean - population_mean) / standard_error  # Z-score formula
     return z_score
 
-# Function to list available .run files and let the user choose one
+# Function to list available *.run files and let the user choose one
 def list_and_choose_run():
     """
-    Lists available .run files and prompts the user to select one for processing.
+    Lists available *.run files and prompts the user to select one for processing.
     Validates user input and handles invalid inputs gracefully.
     """
     run_files = [f for f in os.listdir(runs_path) if f.endswith('.run')]
