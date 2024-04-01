@@ -1,0 +1,18 @@
+Prompt the user to run the program.
+Read a *.run file and store the strings from the second line onwards in a two-dimensional array.
+Compare the stored strings with *.grp file names to read the group files.
+Read a *.grp file and store the strings from the second line onwards in a two-dimensional array.
+Compare the stored strings with *.sec file names to read the section files.
+Find the Grade Point Average (GPA) of each section.
+ - The GPA is based on the definition found in the 'Grading Policies' section of the college catalog.
+ - The "F" grade does not contribute to the score but is included in the GPA calculation.
+ - Grades "I", "W", "P", "NP" do not contribute to the score and are not included in the GPA calculation.
+Calculate the combined GPA of all sections within a group.
+Compare each section's GPA with the group's GPA.
+ - Design and implement a method to determine if the difference between the section's GPA and the group's GPA is significant.
+ - Use a single-sample Z-test, considering it significant if z ≤ -2 or z ≥ 2.
+ - Z = (sample mean - population mean) / population standard deviation
+Output the results for each *.grp in the *.run file.
+ - At the group level: number of courses, number of students, number of each grade, overall GPA of the group, significant difference (if the *.run file contains more than one group)
+ - At the section level: number of students, number of each grade, overall GPA of the section, significant difference from the group GPA
+
