@@ -1,7 +1,6 @@
-import os
-import scipy.stats as stats
-import re
-import numpy as np  # Needed for mathematical operations such as square root
+import os # opening directories from system
+import re # used for 
+import numpy as np  # Needed for mathematical operations such as square root and z-test
 
 # Define the paths to the data directories
 # Realtive path to the data directory
