@@ -26,7 +26,7 @@ def calculate_gpa(grades):
         'F': 0.0
     }
     # Filter out valid grades and calculate GPA
-    valid_grades = [grade_values[grade] for grade in grades if grade in grade_values]
+    valid_grades = [grade_values[grade] for grade in grades if grade in grade_values] # List comprehension
     return round(sum(valid_grades) / len(valid_grades) if valid_grades else 0, 1)
 
 # Function to perform a single sample Z-test correctly
