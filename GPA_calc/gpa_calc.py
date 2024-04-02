@@ -73,34 +73,49 @@ def run_gpa_analysis(run_file):
     """
     if run_file is None:
         return  # Exit if user chose not to select a run file
-
+    
     with open(os.path.join(runs_path, run_file), 'r') as file:
         groups = file.read().splitlines()[1:]  # Ignore the first line (run name)
 
+    # For each group in the run
     for group_file in groups:
         with open(os.path.join(groups_path, group_file), 'r') as file:
             sections = file.read().splitlines()[1:]  # Ignore the first line (group name)
         
-        group_gpas = []  # List to store all section GPAs within the group
+        group_gpas, group_students, group_grades = [], 0, {}
         for section_file in sections:
             with open(os.path.join(sections_path, section_file), 'r') as file:
                 lines = file.read().splitlines()
                 section_name, credit_hours = re.split(r'\s{2,}', lines[0].strip())
-                grades = [line.split(',')[-1].strip('"') for line in lines[1:]]  # Extract grades
+                grades = [line.split(',')[-1].strip('"') for line in lines[1:]]
+                
+                # Update grade distribution for the group
+                for grade in grades:
+                    group_grades[grade] = group_grades.get(grade, 0) + 1
                 
                 section_gpa = calculate_gpa(grades)
                 group_gpas.append(section_gpa)
+                group_students += len(grades)
+                
+                # Section level output
+                print(f"Section {section_file}: Students: {len(grades)}, GPA: {section_gpa}")
         
+        # Calculating group GPA
         group_gpa = sum(group_gpas) / len(group_gpas) if group_gpas else 0
-        n = len(group_gpas)  # Number of sections for Z-test calculation
         
-        # Comparing each section's GPA to the group's GPA using Z-test
+        # Output for each group
+        print(f"Group {group_file}: Courses: {len(group_gpas)}, Students: {group_students}, GPA: {group_gpa:.1f}")
+        
+        # Detailed grade distribution at group level
+        print(f"Grades distribution in group {group_file}: {group_grades}")
+        
+        # For each section in the group, compare GPA to group's GPA
         for section_gpa in group_gpas:
-            z_score = perform_z_test(section_gpa, group_gpa, stats.tstd(group_gpas, ddof=1), n)
+            n = len(group_gpas)  # Number of sections in the group
+            group_std = np.std(group_gpas, ddof=1)  # Calculating the standard deviation
+            z_score = perform_z_test(section_gpa, group_gpa, group_std, n)
             significant_difference = z_score <= -2 or z_score >= 2
-            print(f"Section GPA: {section_gpa}, Group GPA: {group_gpa:.1f}, Significant Difference: {significant_difference}")
-        
-        print(f"Group: {group_file}, Group GPA: {group_gpa:.1f}")
+            print(f"Section GPA: {section_gpa:.1f}, Group GPA: {group_gpa:.1f}, Significant Difference: {significant_difference}")
 
 # Loop to continuously run the program until the user decides to exit
 if __name__ == "__main__":
