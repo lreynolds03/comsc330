@@ -12,13 +12,13 @@ groups_path = os.path.join(base_path, 'Groups')
 runs_path = os.path.join(base_path, 'Runs')
 
 # Function to calculate GPA based on a detailed grading scale
-def calculate_gpa(grades):
+def calculate_gpa(students_grades):
     """
     Calculates GPA considering detailed grading scale.
     Excludes non-GPA affecting grades like I, W, P, NP.
     """
     # Map of grade values
-    grade_values = {
+    grade_points = {
         'A': 4.0, 'A-': 3.7,
         'B+': 3.3, 'B': 3.0, 'B-': 2.7,
         'C+': 2.3, 'C': 2.0, 'C-': 1.7,
@@ -26,8 +26,8 @@ def calculate_gpa(grades):
         'F': 0.0
     }
     # Filter out valid grades and calculate GPA
-    valid_grades = [grade_values[grade] for grade in grades if grade in grade_values] # List comprehension
-    return round(sum(valid_grades) / len(valid_grades) if valid_grades else 0, 1)
+    grades_list = [grade_points[letter] for letter in students_grades if letter in grade_points] # List comprehension
+    return round(sum(grades_list) / len(grades_list) if grades_list else 0, 1)
 
 # Function to perform a single sample Z-test correctly
 def perform_z_test(sample_mean, population_mean, population_std, n):
