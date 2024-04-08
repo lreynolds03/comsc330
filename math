@@ -1,58 +1,106 @@
+import math
+
+# testing variables
 s = "A"
-sumHours = 0
-sumPoints = 0
+totalHours = 0
+sumPoints = 0.0
 ch = 4
 gpa = 1.5
-def GPA (s, sumHours, sumPoints, ch):
-    sumHours += ch
-    if s=='A+':
-        gpa = ch*4.0
-        sumPoints += gpa
-        return gpa, sumHours, sumPoints
-    elif s=='A':
-        gpa = ch*4.0
-        sumPoints += gpa
-        print(sumPoints)
-        return gpa, sumHours, sumPoints
-    elif s=='A-':
-        gpa = ch*3.7
-        sumPoints += gpa
-        return gpa, sumHours, sumPoints
-    elif s=='B+':
-        gpa = ch*3.3
-        sumPoints += gpa
-        return gpa, sumHours, sumPoints
-    elif s=='B':
-        gpa = ch*3.0
-        sumPoints += gpa
-        return gpa, sumHours, sumPoints
-    elif s=='B-':
-        gpa = ch*2.7
-        sumPoints += gpa
-        return gpa, sumHours, sumPoints
-    elif s=='C+':
-        gpa = ch*2.3
-        sumPoints += gpa
-        return gpa, sumHours, sumPoints
-    elif s=='C':
-        gpa = ch*2.0
-        sumPoints += gpa
-        return gpa, sumHours, sumPoints
-    elif s=='C-':
-        gpa = ch*1.7
-        sumPoints += gpa
-        return gpa, sumHours, sumPoints
-    elif s=='D+':
-        gpa = ch*1.3
-        sumPoints += gpa
-        return gpa, sumHours, sumPoints
-    elif s=='D':
-        gpa = ch*1.0
-        sumPoints += gpa
-        return gpa, sumHours, sumPoints
-    elif s=='F':
-        gpa = ch*0
-        sumPoints += gpa
-        return gpa, sumHours, sumPoints
-        
-#for length of file, run GPA function
+
+
+# calculates GPA of given section
+def GPA(s, ch):
+    if s == 'A':
+        # calculate GPA given credit hours
+        gpa = ch * 4.0
+        return gpa
+    elif s == 'A-':
+        gpa = ch * 3.7
+        return gpa
+    elif s == 'B+':
+        gpa = ch * 3.3
+        return gpa
+    elif s == 'B':
+        gpa = ch * 3.0
+        return gpa
+    elif s == 'B-':
+        gpa = ch * 2.7
+        return gpa
+    elif s == 'C+':
+        gpa = ch * 2.3
+        return gpa
+    elif s == 'C':
+        gpa = ch * 2.0
+        return gpa
+    elif s == 'C-':
+        gpa = ch * 1.7
+        return gpa
+    elif s == 'D+':
+        gpa = ch * 1.3
+        return gpa
+    elif s == 'D':
+        gpa = ch * 1.0
+        return gpa
+    elif s == 'D-':
+        gpa = ch * 0.7
+        return gpa
+    elif s == 'F':
+        gpa = ch * 0
+        return gpa
+    elif s == 'I':
+        gpa = 'NA'
+        return gpa
+
+
+# calculate average GPA
+def calcAverageGPA(hours, sumPoints):
+    average = sumPoints / hours
+    return average
+
+
+def zScore(average, gpa, n):
+    sum = 0
+    # for each gpa in file
+    difference = gpa - average
+    sqdif = difference * difference
+    sum += sqdif
+    # end
+    sd = math.sqrt(sum / (n - 1))
+    # for each gpa in file calculate z score
+    z = (gpa - average) / sd
+
+    return float(sd)
+
+
+# array determined in section organization
+
+
+array = [["C", 3], ['A', 3], ['F', 4], ['I', 2]]
+gpaArray = []
+for row in array:
+    # Resets count after each row
+    count = 0
+    for val in row:
+        count += 1
+        # If count = 1, value is the letter grade
+        if count == 1:
+            s = val
+        # If count = 2,
+        elif count == 2:
+            # checks if value contains an empty character (represented as a string in this instance
+            if s != 'NA':
+                ch = val
+                totalHours += ch
+    # calculates gpa of using the given credit hours and grade letter
+    gpa = GPA(s,ch)
+    # sums numerical GPA values
+    if (gpa != "NA"):
+        sumPoints = gpa + sumPoints
+    # add gpa to an array (whether float or str)
+    gpaArray.append(gpa)
+
+average = calcAverageGPA(totalHours, sumPoints)
+
+# prints outputs (testing purposes)
+print("GPAs of section", gpaArray)
+print("Average section gpa", average)
