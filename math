@@ -3,7 +3,7 @@ import math
 # testing variables
 s = "A"
 totalHours = 0
-sumPoints = 0
+sumPoints = 0.0
 ch = 4
 gpa = 1.5
 
@@ -47,6 +47,9 @@ def GPA(s, ch):
     elif s == 'F':
         gpa = ch * 0
         return gpa
+    elif s == 'I':
+        gpa = 'NA'
+        return gpa
 
 
 # calculate average GPA
@@ -66,7 +69,7 @@ def zScore(average, gpa, n):
     # for each gpa in file calculate z score
     z = (gpa - average) / sd
 
-    return sd
+    return float(sd)
 
 
 # array determined in section organization
@@ -75,16 +78,29 @@ def zScore(average, gpa, n):
 array = [["C", 3], ['A', 3], ['F', 4], ['I', 2]]
 gpaArray = []
 for row in array:
+    # Resets count after each row
     count = 0
     for val in row:
         count += 1
+        # If count = 1, value is the letter grade
         if count == 1:
             s = val
+        # If count = 2,
         elif count == 2:
-            ch = val
-            totalHours += ch
+            # checks if value contains an empty character (represented as a string in this instance
+            if s != 'NA':
+                ch = val
+                totalHours += ch
+    # calculates gpa of using the given credit hours and grade letter
     gpa = GPA(s,ch)
+    # sums numerical GPA values
+    if (gpa != "NA"):
+        sumPoints = gpa + sumPoints
+    # add gpa to an array (whether float or str)
     gpaArray.append(gpa)
-    sumPoints += gpa
 
-print(gpaArray)
+average = calcAverageGPA(totalHours, sumPoints)
+
+# prints outputs (testing purposes)
+print("GPAs of section", gpaArray)
+print("Average section gpa", average)
