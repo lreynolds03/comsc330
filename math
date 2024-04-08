@@ -47,7 +47,8 @@ def GPA(s, ch):
     elif s == 'F':
         gpa = ch * 0
         return gpa
-    elif s == 'I':
+    # line allows code to disregard grade letters not mentioned above (ie "i")
+    else:
         gpa = 'NA'
         return gpa
 
@@ -73,10 +74,11 @@ def zScore(average, gpa, n):
 
 
 # array determined in section organization
-
-
+# for now these are testing variables
 array = [["C", 3], ['A', 3], ['F', 4], ['I', 2]]
 gpaArray = []
+
+
 for row in array:
     # Resets count after each row
     count = 0
@@ -96,11 +98,18 @@ for row in array:
     # sums numerical GPA values
     if (gpa != "NA"):
         sumPoints = gpa + sumPoints
-    # add gpa to an array (whether float or str)
-    gpaArray.append(gpa)
+        # add gpa to an array *only float*
+        gpaArray.append(gpa)
 
 average = calcAverageGPA(totalHours, sumPoints)
 
 # prints outputs (testing purposes)
 print("GPAs of section", gpaArray)
 print("Average section gpa", average)
+
+# calculate zscore for each element in gpa Array
+for val in gpaArray:
+    z = zScore(average, val, len(gpaArray))
+    # print element if zscore is significant
+    if (z<-2) or (z>2):
+        print(val, "is significant with a zscore of: ", z)
