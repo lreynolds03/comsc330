@@ -32,3 +32,4 @@ Requirements:
  - Compare each groups data against each other
 - Math - Maria
  - Create a class to calculate z value and GPA conversion
+ - Implement a way to keep track of students with more than one A,A- and more than one D+,D,D-,F
