@@ -8,7 +8,7 @@ Run SEC class for each SEC file
 from sec_class import sec
 #import math_class
 
-def grp(grpFile, outFile):
+def grp(grpFile, outFile): # grpFile is the file name of the group file
 
     with open(grpFile, 'r') as file:
         f = file.read()
@@ -16,7 +16,7 @@ def grp(grpFile, outFile):
     f = f.replace('\n', ',') # replaces each new line symbol with a comma
     f = f.split(',') # splits each element between commas
 
-    sec_array = []
+    sec_array = [] # array to store sec files
 
     for i in range(1, len(f)-1):
         sec_array.append(f[i]) # creates array full of .sec files
