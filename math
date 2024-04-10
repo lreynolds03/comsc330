@@ -1,4 +1,5 @@
 import math
+from collections import Counter
 
 # testing variables
 s = "A"
@@ -21,6 +22,7 @@ array = [["Sekhyny, Jywo","GMGldQk","A",4],
          ["Rkgyxxza, Newtzxey","GMuuCfG","A-",4],
          ["Qsxtymz, Jzxmyp","GMlMfRC","C",4],
          ["Cyxmep, Dzppzx","GMluClk","A",4],
+         ["Cyxmep, Dzppzx","GMluClk","A",4],
          ["Cyxxeazp, Dhyjtzp","GMMfllR","B-",4],
          ["Myxz, Pjhkx","GMfGCQu","A",4],
          ["Mepr, Tehkj","GMfGGGu","A",4],
@@ -30,18 +32,22 @@ array = [["Sekhyny, Jywo","GMGldQk","A",4],
          ["Tedkxy, Qxypoek","GMdCGdQ","F",4],
          ["Fwckiuyp, Tjyp","GMdRQdM","A",4],
          ["Pyaakj, Eytcyp","GMMRClQ","B-",4],
-         ["Pkwc, Ixew","GMlQMkM","A-"]
+         ["Pkwc, Ixew","GMlQMkM","A-",4]
          ]
 # array of weighted valuse to find average gpa
 gpaArray = []
 # array of unweighted GPA values
 individualGPA = []
-# storage for student success
-# ** need to create a new student info array
+# storage for student info -> resets each iteration of the GPA function
 studentInfo = []
+
+# stores student's successes
 tempSuccessArray = []
 successArray = []
 
+# stores student's failures
+tempFailArray = []
+failArray = []
 
 
 
@@ -52,40 +58,17 @@ def GPA(ID, course, s, ch):
         # calculate GPA given credit hours
         gpa = ch * 4.0
         individualGPA.append(4.0)
-        if not tempSuccessArray:
-            studentInfo.append(ID)
-            studentInfo.append(course)
-            tempSuccessArray.append(studentInfo)
-            print('original')
-        elif tempSuccessArray:
-            count = 0
-            for info in tempSuccessArray:
-                print(ID)
-                count = count+1
-                # check if value is pointing to first value in array
-                if count == 1:
-                    print('count=', count)
-                    # check is value is not equal to student ID
-                    if val != ID:
-                        print('should append new student info')
-                        # if not, student info append
-                        studentInfo.append(ID)
-                        studentInfo.append(course)
-                        print('blahblahblha')
-                        print(studentInfo)
-                elif count > 1:
-                    if val !=course:
-                        print('count=', count)
-                        print('mememe')
-                        studentInfo.append(info)
-                        studentInfo.append(course)
-                        tempSuccessArray.append(studentInfo)
+        studentInfo.append(ID)
+        studentInfo.append(course)
+        tempSuccessArray.append(studentInfo)
 
         return gpa
     elif s == 'A-':
         gpa = ch * 3.7
         individualGPA.append(3.7)
-
+        studentInfo.append(ID)
+        studentInfo.append(course)
+        tempSuccessArray.append(studentInfo)
         return gpa
     elif s == 'B+':
         gpa = ch * 3.3
@@ -114,20 +97,36 @@ def GPA(ID, course, s, ch):
     elif s == 'D+':
         gpa = ch * 1.3
         individualGPA.append(1.3)
+        # store students' data
+        studentInfo.append(ID)
+        studentInfo.append(course)
+        tempFailArray.append(studentInfo)
         return gpa
     elif s == 'D':
         gpa = ch * 1.0
         individualGPA.append(1.0)
+        # store students' data
+        studentInfo.append(ID)
+        studentInfo.append(course)
+        tempFailArray.append(studentInfo)
         return gpa
     elif s == 'D-':
         gpa = ch * 0.7
         individualGPA.append(0.7)
+        # store students' data
+        studentInfo.append(ID)
+        studentInfo.append(course)
+        tempFailArray.append(studentInfo)
         return gpa
     elif s == 'F':
         gpa = ch * 0
         individualGPA.append(0)
+        # store students' data
+        studentInfo.append(ID)
+        studentInfo.append(course)
+        tempFailArray.append(studentInfo)
         return gpa
-    # line allows code to disregard grade letters not mentioned above (ie "i")
+    # line allows code to disregard grade letters not mentioned above (ie "I" or "W")
     else:
         gpa = 'NA'
         return gpa
@@ -201,5 +200,31 @@ for val in individualGPA:
     # print element if zscore is significant
     if (z<=-2) or (z>=2):
         print(val, "is significant with a zscore of: ", z)
+
+# removes repeats from tempSuccessArray
 for val in tempSuccessArray:
-    print(val)
+    count = tempSuccessArray.count(val)
+
+    # if student has more than one occurrence
+    if count >1:
+        for element in successArray:
+            if val not in successArray:
+                successArray.append(val)
+        if not successArray:
+            successArray.append(val)
+
+# removes repeats from tempFailArray
+for val in tempFailArray:
+    count = tempFailArray.count(val)
+
+    # if student has more than one occurrence
+    if count >1:
+        for element in failArray:
+            if val not in failArray:
+                failArray.append(val)
+        if not failArray:
+            failArray.append(val)
+
+# print output of program
+print("success: ", successArray)
+print('fail: ', failArray)
