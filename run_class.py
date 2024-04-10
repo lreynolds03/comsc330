@@ -3,9 +3,9 @@ RUN class
 """
 
 from grp_class import grp
-import re
+import re # necessary to remove quotes from student info
 
-def run(runFile, outFile):
+def run(runFile, outFile): # runFile is the file name of the run file
 
     # open file input by user
     with open(runFile, 'r') as file:
@@ -22,7 +22,7 @@ def run(runFile, outFile):
     print(grp_array)
 
     for grpFile in range(0, len(grp_array)):
-        outFile.write(str(grp_array[grpFile]))
+        outFile.write(str(grp_array[grpFile])) # writes name of .grp file to results.txt
         outFile.write('\n')
         grp(grp_array[grpFile], outFile) # runs grp class for every .grp file in array
 
@@ -32,7 +32,7 @@ def main():
 
         # create results text file
     with open ('results.txt', 'w') as results:
-        while file != 'quit':
+        while file != 'quit': # loop to run program until user types 'quit'
 
             run(file, results)
 
