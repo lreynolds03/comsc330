@@ -8,6 +8,7 @@ sumPoints = 0.0
 ch = 4
 gpa = 1.5
 sum = 0
+dictCount = 0
 # array determined in section organization
 # for now these are testing variables
 array = [["Sekhyny, Jywo","GMGldQk","A",4],
@@ -26,6 +27,7 @@ array = [["Sekhyny, Jywo","GMGldQk","A",4],
          ["Cyxxeazp, Dhyjtzp","GMMfllR","B-",4],
          ["Myxz, Pjhkx","GMfGCQu","A",4],
          ["Mepr, Tehkj","GMfGGGu","A",4],
+         ["Sekhyny, Jywo","GMGldQq","A",4],
          ["Oyhhzlle, Jzakic","GMMRufu","W",4],
          ["Aprkxy, Jzacsy","GdkCCkM","NP",4],
          ["Lekxwk, Myukxzp","GMMRllQ","D",4],
@@ -41,34 +43,38 @@ individualGPA = []
 # storage for student info -> resets each iteration of the GPA function
 studentInfo = []
 
-# stores student's successes
-tempSuccessArray = []
-successArray = []
+# creates a dictionary to store students and their successful courses
+successDict = {}
 
-# stores student's failures
-tempFailArray = []
-failArray = []
+# creates a dictionary to store students and their fail courses
+failDict = {}
 
 
 
 # calculates GPA of given section
 def GPA(ID, course, s, ch):
-    studentInfo = []
     if s == 'A':
         # calculate GPA given credit hours
         gpa = ch * 4.0
         individualGPA.append(4.0)
-        studentInfo.append(ID)
-        studentInfo.append(course)
-        tempSuccessArray.append(studentInfo)
+
+        # use dictionary to track students with more than one A or A-
+        if ID in successDict:
+            successDict[ID].append(course)
+        else:
+            successDict[ID] = [course]
 
         return gpa
     elif s == 'A-':
         gpa = ch * 3.7
         individualGPA.append(3.7)
-        studentInfo.append(ID)
-        studentInfo.append(course)
-        tempSuccessArray.append(studentInfo)
+
+        # use dictionary to track students with more than one A or A-
+        if ID in successDict:
+            successDict[ID].append(course)
+        else:
+            successDict[ID] = [course]
+
         return gpa
     elif s == 'B+':
         gpa = ch * 3.3
@@ -97,34 +103,46 @@ def GPA(ID, course, s, ch):
     elif s == 'D+':
         gpa = ch * 1.3
         individualGPA.append(1.3)
-        # store students' data
-        studentInfo.append(ID)
-        studentInfo.append(course)
-        tempFailArray.append(studentInfo)
+
+        # use dictionary to track students with more than one D+, D, D-, or F
+        if ID in failDict:
+            failDict[ID].append(course)
+        else:
+            failDict[ID] = [course]
+
         return gpa
     elif s == 'D':
         gpa = ch * 1.0
         individualGPA.append(1.0)
-        # store students' data
-        studentInfo.append(ID)
-        studentInfo.append(course)
-        tempFailArray.append(studentInfo)
+
+        # use dictionary to track students with more than one D+, D, D-, or F
+        if ID in failDict:
+            failDict[ID].append(course)
+        else:
+            failDict[ID] = [course]
+
         return gpa
     elif s == 'D-':
         gpa = ch * 0.7
         individualGPA.append(0.7)
-        # store students' data
-        studentInfo.append(ID)
-        studentInfo.append(course)
-        tempFailArray.append(studentInfo)
+
+        # use dictionary to track students with more than one D+, D, D-, or F
+        if ID in failDict:
+            failDict[ID].append(course)
+        else:
+            failDict[ID] = [course]
+
         return gpa
     elif s == 'F':
         gpa = ch * 0
         individualGPA.append(0)
-        # store students' data
-        studentInfo.append(ID)
-        studentInfo.append(course)
-        tempFailArray.append(studentInfo)
+
+        # use dictionary to track students with more than one D+, D, D-, or F
+        if ID in failDict:
+            failDict[ID].append(course)
+        else:
+            failDict[ID] = [course]
+
         return gpa
     # line allows code to disregard grade letters not mentioned above (ie "I" or "W")
     else:
@@ -132,7 +150,7 @@ def GPA(ID, course, s, ch):
         return gpa
 
 
-# calculate average GPA
+    # calculate average GPA
 def calcAverageGPA(hours, sumPoints):
     average = sumPoints / hours
     return average
@@ -188,8 +206,7 @@ print("Average section gpa", average)
 
 # calculates difference of sums
 for val in individualGPA:
-    diff = difOfSquares(average, gpa, sum)
-    sum = diff
+    sum += difOfSquares(average, gpa, sum)
 
 # calculate standard deviation (square root of sum/n-1)
 sd = math.sqrt(sum / (len(individualGPA)- 1))
@@ -201,30 +218,6 @@ for val in individualGPA:
     if (z<=-2) or (z>=2):
         print(val, "is significant with a zscore of: ", z)
 
-# removes repeats from tempSuccessArray
-for val in tempSuccessArray:
-    count = tempSuccessArray.count(val)
-
-    # if student has more than one occurrence
-    if count >1:
-        for element in successArray:
-            if val not in successArray:
-                successArray.append(val)
-        if not successArray:
-            successArray.append(val)
-
-# removes repeats from tempFailArray
-for val in tempFailArray:
-    count = tempFailArray.count(val)
-
-    # if student has more than one occurrence
-    if count >1:
-        for element in failArray:
-            if val not in failArray:
-                failArray.append(val)
-        if not failArray:
-            failArray.append(val)
-
 # print output of program
-print("success: ", successArray)
-print('fail: ', failArray)
+print("success: ", successDict)
+print('fail: ', failDict)
