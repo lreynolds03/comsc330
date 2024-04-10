@@ -1,5 +1,6 @@
-#   Liam Reynolds
-#   Run class
+"""
+RUN class
+"""
 
 from grp_class import grp
 import re
