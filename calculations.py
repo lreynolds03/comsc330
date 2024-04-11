@@ -153,9 +153,16 @@ def mainGPA(array):
         tally = tally + 1
         # Resets count after each row
         countRow = 0
-        if tally == 1 or tally == 2:
-            course = 'test'
-            ch = 4
+        if tally == 1:
+            print('row', row, 'tally', tally)
+            for val in row:
+                countRow = countRow + 1
+                if countRow == 1:
+                    course = val
+                    print('course', course)
+                elif countRow == 2:
+                    ch = 4
+                    print('ch', val)
         else:
             for val in row:
                 countRow += 1
