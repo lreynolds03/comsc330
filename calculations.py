@@ -154,15 +154,12 @@ def mainGPA(array):
         # Resets count after each row
         countRow = 0
         if tally == 1:
-            print('row', row, 'tally', tally)
             for val in row:
                 countRow = countRow + 1
-                if countRow == 1:
-                    course = val
-                    print('course', course)
-                elif countRow == 2:
+                if countRow == 4:
+                    course = ('course')
+                elif countRow == 5:
                     ch = 4
-                    print('ch', val)
         else:
             for val in row:
                 countRow += 1
@@ -174,13 +171,9 @@ def mainGPA(array):
                     s = val
             results = GPA(ID, course, s, ch, individualGPA, successDict, failDict, sumPoints)
     individualGPA = results[1]
-    print(individualGPA)
     successDict = results[2]
-    print(successDict)
     failDict = results[3]
-    print(failDict)
     sumPoints = results[4]
-    print(sumPoints)
     totalHours = ch*(tally-3)
 
     # calculates gpa of using the given credit hours and grade letter
@@ -201,7 +194,9 @@ def mainGPA(array):
         z = zScore(average, val, sd)
         # print element if zscore is significant
         if (z<=-2) or (z>=2):
-            significant.append(val, "is significant with a zscore of: ", z)
+            significant.append("\n",val, "is significant with a zscore of: ", z)
+            print(val, "is significant with a zscore of: ", z)
+
 
     # print output of program
     print("success: ", successDict)
