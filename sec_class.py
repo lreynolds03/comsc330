@@ -8,7 +8,7 @@ return 2D array
 import re   # necessary to remove quotes from student info
 
 
-def sec(secFile, outFile): # secFile is the file name of the section file
+def sec(secFile, outFile, successDict, failDict): # secFile is the file name of the section file
 
     with open (secFile, 'r') as file:
         f = file.read()
@@ -33,7 +33,9 @@ def sec(secFile, outFile): # secFile is the file name of the section file
         studentInfo.append(f[i:i+4]) # Groups four items at a time starting at first students last name  
 
     import calculations as c
-    results = c.mainGPA(studentInfo)
+
+    # call calculation class
+    results = c.mainGPA(studentInfo, successDict, failDict)
 
     return results
 

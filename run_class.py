@@ -5,7 +5,7 @@ RUN class
 from grp_class import grp
 import re # necessary to remove quotes from student info
 
-def run(runFile, outFile): # runFile is the file name of the run file
+def run(runFile, outFile, successDict, failDict): # runFile is the file name of the run file
 
     # open file input by user
     with open(runFile, 'r') as file:
@@ -24,7 +24,7 @@ def run(runFile, outFile): # runFile is the file name of the run file
     for grpFile in range(0, len(grp_array)):
         outFile.write(str(grp_array[grpFile])) # writes name of .grp file to results.txt
         outFile.write('\n')
-        grp(grp_array[grpFile], outFile) # runs grp class for every .grp file in array
+        grp(grp_array[grpFile], outFile, successDict, failDict) # runs grp class for every .grp file in array
 
 def main():
 
@@ -33,8 +33,12 @@ def main():
         # create results text file
     with open ('results.txt', 'w') as results:
         while file != 'quit': # loop to run program until user types 'quit'
+            # creates a dictionary to store students and their successful courses
+            successDict = {}
+            # creates a dictionary to store students and their fail courses
+            failDict = {}
 
-            run(file, results)
+            run(file, results, successDict, failDict)
 
             file = input('Enter the name of the .run file you want to run (ex: filename.run), or type \'quit\' to exit program:\n')
 

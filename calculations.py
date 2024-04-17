@@ -130,7 +130,7 @@ def difOfSquares(average, gpa, sum):
     sum += sqdif
     return sum
     # end
-def mainGPA(array):
+def mainGPA(array, successDict, failDict):
     # initialize variables
     totalHours = 0
     sumPoints = 0.0
@@ -143,11 +143,7 @@ def mainGPA(array):
     # array of unweighted GPA values
     individualGPA = []
     significant = []
-    # creates a dictionary to store students and their successful courses
-    successDict = {}
 
-    # creates a dictionary to store students and their fail courses
-    failDict = {}
     results = 0
     # calculates gpas of each student given a section array
     tally = 0
