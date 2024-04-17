@@ -135,6 +135,8 @@ def mainGPA(array):
     totalHours = 0
     sumPoints = 0.0
     sum = 0
+    course = ''
+    ch = 0
 
     # array of weighted values to find average gpa
     gpaArray = []
@@ -151,15 +153,17 @@ def mainGPA(array):
     tally = 0
     for row in array:
         tally = tally + 1
+        print(row)
         # Resets count after each row
+
         countRow = 0
         if tally == 1:
             for val in row:
                 countRow = countRow + 1
-                if countRow == 4:
-                    course = ('course')
-                elif countRow == 5:
-                    ch = 4
+                if countRow == 1:
+                    course = val
+                elif countRow == 2:
+                    ch = float(val)
         else:
             for val in row:
                 countRow += 1
@@ -170,15 +174,15 @@ def mainGPA(array):
                 elif countRow == 4:
                     s = val
             results = GPA(ID, course, s, ch, individualGPA, successDict, failDict, sumPoints)
+            totalHours = totalHours+ch
+
     individualGPA = results[1]
     successDict = results[2]
     failDict = results[3]
     sumPoints = results[4]
-    totalHours = ch*(tally-3)
 
     # calculates gpa of using the given credit hours and grade letter
 
-    
     average = calcAverageGPA(totalHours, sumPoints)
 
     # calculates difference of sums
