@@ -2,6 +2,7 @@ import math
 
 # calculates GPA of given section
 def GPA(ID, course, s, ch, individualGPA, successDict, failDict, sumPoints):
+    group = {}
     if s == 'A':
         # calculate GPA given credit hours
         gpa = ch * 4.0
@@ -9,10 +10,11 @@ def GPA(ID, course, s, ch, individualGPA, successDict, failDict, sumPoints):
         sumPoints = gpa + sumPoints
 
         # use dictionary to track students with more than one A or A-
-        if ID in successDict:
-            successDict[ID].append(course)
+        if successDict.fromkeys(ID) == True:
+            successDict[ID].add(course)
         else:
-            successDict[ID] = [course]
+            successDict.update({ID: course})
+
 
         return gpa, individualGPA, successDict, failDict, sumPoints
     elif s == 'A-':
@@ -20,10 +22,12 @@ def GPA(ID, course, s, ch, individualGPA, successDict, failDict, sumPoints):
         individualGPA.append(3.7)
         sumPoints = gpa + sumPoints
         # use dictionary to track students with more than one A or A-
-        if ID in successDict:
-            successDict[ID].append(course)
+        # use dictionary to track students with more than one A or A-
+
+        if successDict.fromkeys(ID) == True:
+            successDict[ID].add(course)
         else:
-            successDict[ID] = [course]
+            successDict.update({ID: course})
 
         return gpa, individualGPA, successDict, failDict, sumPoints
     elif s == 'B+':
@@ -62,10 +66,10 @@ def GPA(ID, course, s, ch, individualGPA, successDict, failDict, sumPoints):
         sumPoints = gpa + sumPoints
 
         # use dictionary to track students with more than one D+, D, D-, or F
-        if ID in failDict:
-            failDict[ID].append(course)
+        if failDict.fromkeys(ID) == True:
+            failDict[ID].add(course)
         else:
-            failDict[ID] = [course]
+            failDict.update({ID: course})
 
         return gpa, individualGPA, successDict, failDict, sumPoints
     elif s == 'D':
@@ -74,10 +78,10 @@ def GPA(ID, course, s, ch, individualGPA, successDict, failDict, sumPoints):
         sumPoints = gpa + sumPoints
 
         # use dictionary to track students with more than one D+, D, D-, or F
-        if ID in failDict:
-            failDict[ID].append(course)
+        if failDict.fromkeys(ID) == True:
+            failDict[ID].add(course)
         else:
-            failDict[ID] = [course]
+            failDict.update({ID: course})
 
         return gpa, individualGPA, successDict, failDict, sumPoints
     elif s == 'D-':
@@ -86,10 +90,12 @@ def GPA(ID, course, s, ch, individualGPA, successDict, failDict, sumPoints):
         sumPoints = gpa + sumPoints
 
         # use dictionary to track students with more than one D+, D, D-, or F
-        if ID in failDict:
-            failDict[ID].append(course)
+        # use dictionary to track students with more than one A or A-
+        # use dictionary to track students with more than one D+, D, D-, or F
+        if failDict.fromkeys(ID) == True:
+            failDict[ID].add(course)
         else:
-            failDict[ID] = [course]
+            failDict.update({ID: course})
 
         return gpa, individualGPA, successDict, failDict, sumPoints
     elif s == 'F':
@@ -98,10 +104,10 @@ def GPA(ID, course, s, ch, individualGPA, successDict, failDict, sumPoints):
         sumPoints = gpa + sumPoints
 
         # use dictionary to track students with more than one D+, D, D-, or F
-        if ID in failDict:
-            failDict[ID].append(course)
+        if failDict.fromkeys(ID) == True:
+            failDict[ID].add(course)
         else:
-            failDict[ID] = [course]
+            failDict.update({ID: course})
 
         return gpa, individualGPA, successDict, failDict, sumPoints
     # line allows code to disregard grade letters not mentioned above (ie "I" or "W")
@@ -138,8 +144,6 @@ def mainGPA(array, successDict, failDict):
     course = ''
     ch = 0
 
-    # array of weighted values to find average gpa
-    gpaArray = []
     # array of unweighted GPA values
     individualGPA = []
     significant = []
