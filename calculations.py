@@ -1,119 +1,113 @@
 import math
 
+
+
+def add(s, ID, course, tempMulti):
+    count = 0
+    if len(tempMulti) == 0:
+        array = []
+        array.append(s)
+        array.append(ID)
+        array.append(course)
+        tempMulti.append(array)
+    else:
+        for row in tempMulti:
+            if tempMulti[0] == s:
+                if tempMulti[1] == ID:
+                    for val in row:
+                        if val == course:
+                            count = count+1
+                            print(count)
+                    if course < 1:
+                        tempMulti[row].append(course)
+
+    return tempMulti
+
+
+
 # calculates GPA of given section
-def GPA(ID, course, s, ch, individualGPA, successDict, failDict, sumPoints):
-    group = {}
+def GPA(ID, course, s, ch, individualGPA, tempMulti, sumPoints):
+    print('temp', tempMulti)
     if s == 'A':
         # calculate GPA given credit hours
         gpa = ch * 4.0
         individualGPA.append(4.0)
         sumPoints = gpa + sumPoints
 
-        # use dictionary to track students with more than one A or A-
-        if successDict.fromkeys(ID) == True:
-            successDict[ID].add(course)
-        else:
-            successDict.update({ID: course})
+        tempMulti = add(s, ID, course, tempMulti)
 
 
-        return gpa, individualGPA, successDict, failDict, sumPoints
+        return gpa, individualGPA, tempMulti, sumPoints
     elif s == 'A-':
         gpa = ch * 3.7
         individualGPA.append(3.7)
         sumPoints = gpa + sumPoints
         # use dictionary to track students with more than one A or A-
-        # use dictionary to track students with more than one A or A-
+        tempMulti = add(s, ID, course, tempMulti)
 
-        if successDict.fromkeys(ID) == True:
-            successDict[ID].add(course)
-        else:
-            successDict.update({ID: course})
-
-        return gpa, individualGPA, successDict, failDict, sumPoints
+        return gpa, individualGPA, tempMulti, sumPoints
     elif s == 'B+':
         gpa = ch * 3.3
         individualGPA.append(3.3)
         sumPoints = gpa + sumPoints
-        return gpa, individualGPA, successDict, failDict, sumPoints
+        return gpa, individualGPA, tempMulti, sumPoints
     elif s == 'B':
         gpa = ch * 3.0
         individualGPA.append(3.0)
         sumPoints = gpa + sumPoints
-        return gpa, individualGPA, successDict, failDict, sumPoints
+        return gpa, individualGPA, tempMulti, sumPoints
     elif s == 'B-':
         gpa = ch * 2.7
         individualGPA.append(2.7)
         sumPoints = gpa + sumPoints
-        return gpa, individualGPA, successDict, failDict, sumPoints
+        return gpa, individualGPA, tempMulti, sumPoints
     elif s == 'C+':
         gpa = ch * 2.3
         individualGPA.append(2.3)
         sumPoints = gpa + sumPoints
-        return gpa, individualGPA, successDict, failDict, sumPoints
+        return gpa, individualGPA, tempMulti, sumPoints
     elif s == 'C':
         gpa = ch * 2.0
         individualGPA.append(2.0)
         sumPoints = gpa + sumPoints
-        return gpa, individualGPA, successDict, failDict, sumPoints
+        return gpa, individualGPA, tempMulti, sumPoints
     elif s == 'C-':
         gpa = ch * 1.7
         individualGPA.append(1.7)
         sumPoints = gpa + sumPoints
-        return gpa, individualGPA, successDict, failDict, sumPoints
+        return gpa, individualGPA, tempMulti, sumPoints
     elif s == 'D+':
         gpa = ch * 1.3
         individualGPA.append(1.3)
         sumPoints = gpa + sumPoints
+        tempMulti = add(s, ID, course, tempMulti)
 
-        # use dictionary to track students with more than one D+, D, D-, or F
-        if failDict.fromkeys(ID) == True:
-            failDict[ID].add(course)
-        else:
-            failDict.update({ID: course})
-
-        return gpa, individualGPA, successDict, failDict, sumPoints
+        return gpa, individualGPA, tempMulti, sumPoints
     elif s == 'D':
         gpa = ch * 1.0
         individualGPA.append(1.0)
         sumPoints = gpa + sumPoints
+        tempMulti = add(s, ID, course, tempMulti)
 
-        # use dictionary to track students with more than one D+, D, D-, or F
-        if failDict.fromkeys(ID) == True:
-            failDict[ID].add(course)
-        else:
-            failDict.update({ID: course})
-
-        return gpa, individualGPA, successDict, failDict, sumPoints
+        return gpa, individualGPA, tempMulti, sumPoints
     elif s == 'D-':
         gpa = ch * 0.7
         individualGPA.append(0.7)
         sumPoints = gpa + sumPoints
+        tempMulti = add(s, ID, course, tempMulti)
 
-        # use dictionary to track students with more than one D+, D, D-, or F
-        # use dictionary to track students with more than one A or A-
-        # use dictionary to track students with more than one D+, D, D-, or F
-        if failDict.fromkeys(ID) == True:
-            failDict[ID].add(course)
-        else:
-            failDict.update({ID: course})
-
-        return gpa, individualGPA, successDict, failDict, sumPoints
+        return gpa, individualGPA, tempMulti, sumPoints
     elif s == 'F':
         gpa = ch * 0
         individualGPA.append(0)
         sumPoints = gpa + sumPoints
+        tempMulti = add(s, ID, course, tempMulti)
 
-        # use dictionary to track students with more than one D+, D, D-, or F
-        if failDict.fromkeys(ID) == True:
-            failDict[ID].add(course)
-        else:
-            failDict.update({ID: course})
-
-        return gpa, individualGPA, successDict, failDict, sumPoints
+        return gpa, individualGPA, tempMulti, sumPoints
     # line allows code to disregard grade letters not mentioned above (ie "I" or "W")
     else:
         gpa = 'NA'
-        return gpa, individualGPA, successDict, failDict
+        return gpa, individualGPA, tempMulti, sumPoints
 
 
 
@@ -136,50 +130,48 @@ def difOfSquares(average, gpa, sum):
     sum += sqdif
     return sum
     # end
-def mainGPA(array, successDict, failDict):
+def mainGPA(array, tempMulti):
     # initialize variables
     totalHours = 0
     sumPoints = 0.0
     sum = 0
     course = ''
     ch = 0
-
     # array of unweighted GPA values
     individualGPA = []
     significant = []
 
     results = 0
-    # calculates gpas of each student given a section array
-    tally = 0
-    for row in array:
-        tally = tally + 1
-        print(row)
-        # Resets count after each row
 
-        countRow = 0
-        if tally == 1:
-            for val in row:
-                countRow = countRow + 1
-                if countRow == 1:
-                    course = val
-                elif countRow == 2:
-                    ch = float(val)
+    # calculates gpas of each student given a section array
+    count = 0
+    for row in array:
+        count = count+1
+        if count == 1:
+            course = row[0]
+            ch = float(row[1])
+
+
         else:
-            for val in row:
-                countRow += 1
-                # If count = 3, value is the students ID
-                if countRow == 3:
-                    ID = val
-                # If count = 4, grade letter
-                elif countRow == 4:
-                    s = val
-            results = GPA(ID, course, s, ch, individualGPA, successDict, failDict, sumPoints)
-            totalHours = totalHours+ch
+            # determines length of the given array
+            length = len(row)
+
+            # determines specific informatoin about student
+
+            # ID is always second to last position
+            ID = row[length-2]
+            # s is always last position
+            s = row[length-1]
+
+            results = GPA(ID, course, s, ch, individualGPA, tempMulti, sumPoints)
+            totalHours = totalHours + ch
+
+
+
 
     individualGPA = results[1]
-    successDict = results[2]
-    failDict = results[3]
-    sumPoints = results[4]
+    tempMulti = results[2]
+    sumPoints = results[3]
 
     # calculates gpa of using the given credit hours and grade letter
 
@@ -202,8 +194,6 @@ def mainGPA(array, successDict, failDict):
             print(val, "is significant with a zscore of: ", z)
 
 
-    # print output of program
-    print("success: ", successDict)
-    print('fail: ', failDict)
 
-    return average, successDict, failDict, significant
+
+    return average, significant, tempMulti

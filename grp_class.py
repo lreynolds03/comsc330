@@ -8,7 +8,7 @@ Run SEC class for each SEC file
 from sec_class import sec
 #import math_class
 
-def grp(grpFile, outFile, successDict, failDict): # grpFile is the file name of the group file
+def grp(grpFile, outFile, all): # grpFile is the file name of the group file
 
     with open(grpFile, 'r') as file:
         f = file.read()
@@ -24,7 +24,9 @@ def grp(grpFile, outFile, successDict, failDict): # grpFile is the file name of 
     print(sec_array)
 
     for file in range(0, len(sec_array)):
-        sec(sec_array[file], outFile, successDict, failDict) # runs sec class for every .sec file in array
+        results = sec(sec_array[file], outFile, all) # runs sec class for every .sec file in array
+        all.append(results)
+    return all
 
 """
 def main():

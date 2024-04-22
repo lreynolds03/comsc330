@@ -8,7 +8,7 @@ return 2D array
 import re   # necessary to remove quotes from student info
 
 
-def sec(secFile, outFile, successDict, failDict): # secFile is the file name of the section file
+def sec(secFile, outFile, tempMulti): # secFile is the file name of the section file
 
     with open (secFile, 'r') as file:
         f = file.read()
@@ -35,15 +35,19 @@ def sec(secFile, outFile, successDict, failDict): # secFile is the file name of 
     import calculations as c
 
     # call calculation class
-    results = c.mainGPA(studentInfo, successDict, failDict)
+    results = c.mainGPA(studentInfo, tempMulti)
+    r = results[2:]
+    return r
 
-    return results
 
-"""
+'''
 def main():
 
     file = input('Enter the name of the file you want to run: ')
-    sec(file)
+    outFile = 0
+    tempMulti = []
+    sec(file, outFile, tempMulti)
 
 main()
-"""
+
+'''
