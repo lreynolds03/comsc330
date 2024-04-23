@@ -4,22 +4,41 @@ import math
 
 def add(s, ID, course, tempMulti):
     count = 0
+    array = []
+
     if len(tempMulti) == 0:
-        array = []
-        array.append(s)
-        array.append(ID)
-        array.append(course)
+        array.insert(0,s)
+        array.insert(1,ID)
+        array.insert(2,course)
         tempMulti.append(array)
     else:
+        sCount = 0
+        idCount = 0
         for row in tempMulti:
-            if tempMulti[0] == s:
-                if tempMulti[1] == ID:
+            if row[0] == s:
+                sCount = sCount+1
+                if row[1] == ID:
+                    idCount = idCount+1
+                    index = 2
                     for val in row:
+                        index = index+1
                         if val == course:
                             count = count+1
                             print(count)
-                    if course < 1:
-                        tempMulti[row].append(course)
+                    if count < 1:
+                        print(tempMulti[row])
+                        tempMulti[row].insert(index, course)
+                        tempMulti.append(array)
+        if sCount <1:
+            array.insert(0,s)
+            array.insert(1,ID)
+            array.insert(2,course)
+            tempMulti.append(array)
+        if idCount <1:
+            array.insert(0,s)
+            array.insert(1,ID)
+            array.insert(2,course)
+
 
     return tempMulti
 
@@ -160,8 +179,10 @@ def mainGPA(array, tempMulti):
 
             # ID is always second to last position
             ID = row[length-2]
+            print('id: ', ID)
             # s is always last position
             s = row[length-1]
+            print('s: ', s)
 
             results = GPA(ID, course, s, ch, individualGPA, tempMulti, sumPoints)
             totalHours = totalHours + ch
