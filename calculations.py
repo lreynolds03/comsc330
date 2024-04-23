@@ -25,19 +25,22 @@ def add(s, ID, course, tempMulti):
                         if val == course:
                             count = count+1
                             print(count)
-                    if count < 1:
-                        print(tempMulti[row])
+                    if count < 2:
+                        print('multi row' , tempMulti[row])
                         tempMulti[row].insert(index, course)
-                        tempMulti.append(array)
-        if sCount <1:
-            array.insert(0,s)
-            array.insert(1,ID)
-            array.insert(2,course)
-            tempMulti.append(array)
+
         if idCount <1:
-            array.insert(0,s)
-            array.insert(1,ID)
-            array.insert(2,course)
+            if sCount <1:
+                array.insert(0,s)
+                array.insert(1,ID)
+                array.insert(2,course)
+                tempMulti.append(array)
+            else:
+                array.insert(0,s)
+                array.insert(1,ID)
+                array.insert(2,course)
+                tempMulti.append(array)
+
 
 
     return tempMulti
