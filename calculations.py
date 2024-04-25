@@ -6,28 +6,37 @@ def add(s, ID, course, tempMulti):
     count = 0
     array = []
 
+    # Checks if tempMulti is empty
     if len(tempMulti) == 0:
+        print("length == 0")
+        # adds in a new array with students:
+        # grade
         array.insert(0,s)
+        # ID
         array.insert(1,ID)
+        # and Course
         array.insert(2,course)
+        # appends array to main, tempMulti
         tempMulti.append(array)
     else:
         sCount = 0
         idCount = 0
+        # check each student info in current array
         for row in tempMulti:
+            # check if student ID is already in array
             if row[0] == s:
+                # if so, increase count to indicate already in array
                 sCount = sCount+1
+
                 if row[1] == ID:
+                    print("row == ID")
                     idCount = idCount+1
-                    index = 2
                     for val in row:
-                        index = index+1
                         if val == course:
                             count = count+1
                             print(count)
                     if count < 2:
-                        print('multi row' , tempMulti[row])
-                        tempMulti[row].insert(index, course)
+                        row.insert(course)
 
         if idCount <1:
             if sCount <1:

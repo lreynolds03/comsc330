@@ -37,6 +37,10 @@ def main():
         while file != 'quit': # loop to run program until user types 'quit'
             all = []
             r = run(file, results, all)
+            count=0
+            for val in r:
+                print(count, ': ', len(val))
+                count = count+1
 
 
             file = input('Enter the name of the .run file you want to run (ex: filename.run), or type \'quit\' to exit program:\n')
