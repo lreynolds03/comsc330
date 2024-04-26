@@ -5,7 +5,7 @@ import math
 def add(s, ID, course, tempMulti):
     count = 0
     array = []
-
+    print(type(tempMulti))
     # Checks if tempMulti is empty
     if len(tempMulti) == 0:
         print("length == 0")
@@ -27,7 +27,6 @@ def add(s, ID, course, tempMulti):
             if row[0] == s:
                 # if so, increase count to indicate already in array
                 sCount = sCount+1
-
                 if row[1] == ID:
                     print("row == ID")
                     idCount = idCount+1
@@ -36,7 +35,8 @@ def add(s, ID, course, tempMulti):
                             count = count+1
                             print(count)
                     if count < 2:
-                        row.insert(course)
+                        row.append(course)
+
 
         if idCount <1:
             if sCount <1:
