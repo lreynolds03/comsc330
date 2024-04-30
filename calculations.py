@@ -33,8 +33,8 @@ def add(s, ID, course, tempMulti):
                     for val in row:
                         if val == course:
                             count = count+1
-                            print(count)
-                    if count < 2:
+                            print('count', count)
+                    if count < 1:
                         row.append(course)
 
 
