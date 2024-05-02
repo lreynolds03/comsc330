@@ -24,11 +24,10 @@ def grp(grpFile, outFile, all): # grpFile is the file name of the group file
 
     for file in range(0, len(sec_array)):
         outFile.write(str(sec_array[file][0:-4])) # writes name of .grp file to results.txt
-        outFile.write('\n')
+        outFile.write(', GPA: \n')
         results = sec(sec_array[file], outFile, all) # runs sec class for every .sec file in array
         all.append(results)
 
     outFile.write('\n')
 
     return all
-
