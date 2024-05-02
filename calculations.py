@@ -1,39 +1,41 @@
 import math
 
-
-
 def add(s, ID, course, tempMulti):
+
     count = 0
     array = []
-    print(type(tempMulti))
+
     # Checks if tempMulti is empty
     if len(tempMulti) == 0:
-        print("length == 0")
         # adds in a new array with students:
-        # grade
-        array.insert(0,s)
-        # ID
-        array.insert(1,ID)
-        # and Course
-        array.insert(2,course)
-        # appends array to main, tempMulti
-        tempMulti.append(array)
+        array.insert(0,s) # grade
+        array.insert(1,ID) # ID
+        array.insert(2,course) # and Course
+        tempMulti.append(array) # appends array to main, tempMulti
+
     else:
+
         sCount = 0
         idCount = 0
+
         # check each student info in current array
-        for row in tempMulti:
-            # check if student ID is already in array
-            if row[0] == s:
-                # if so, increase count to indicate already in array
+        for row in tempMulti: # check if student ID is already in array   
+            if row[0] == 'A' or row[0] == 'A-': # if so, increase count to indicate already in array
                 sCount = sCount+1
                 if row[1] == ID:
-                    print("row == ID")
                     idCount = idCount+1
                     for val in row:
                         if val == course:
                             count = count+1
-                            print('count', count)
+                    if count < 1:
+                        row.append(course)
+            if row[0] == 'D-' or row[0] == 'D' or  row[0] == 'D+' or row[0] == 'F': # if so, increase count to indicate already in array
+                sCount = sCount+1
+                if row[1] == ID:
+                    idCount = idCount+1
+                    for val in row:
+                        if val == course:
+                            count = count+1
                     if count < 1:
                         row.append(course)
 
@@ -58,17 +60,18 @@ def add(s, ID, course, tempMulti):
 
 # calculates GPA of given section
 def GPA(ID, course, s, ch, individualGPA, tempMulti, sumPoints):
-    print('temp', tempMulti)
+    # print('temp', tempMulti)
     if s == 'A':
         # calculate GPA given credit hours
         gpa = ch * 4.0
         individualGPA.append(4.0)
         sumPoints = gpa + sumPoints
-
+            
         tempMulti = add(s, ID, course, tempMulti)
-
-
         return gpa, individualGPA, tempMulti, sumPoints
+
+
+        
     elif s == 'A-':
         gpa = ch * 3.7
         individualGPA.append(3.7)
@@ -191,10 +194,10 @@ def mainGPA(array, tempMulti):
 
             # ID is always second to last position
             ID = row[length-2]
-            print('id: ', ID)
+            # print('id: ', ID)
             # s is always last position
             s = row[length-1]
-            print('s: ', s)
+            # print('s: ', s)
 
             results = GPA(ID, course, s, ch, individualGPA, tempMulti, sumPoints)
             totalHours = totalHours + ch
