@@ -1,19 +1,34 @@
 # !!!!!!! for running, add 'if name == "main":' above the 'main()' in run_class.py. !!!!!!
 
 import tkinter as tk
-from tkinter import *
-from tkinter import filedialog # filegetter & listbox
-from tkinter import messagebox # warning message
-from tkinter import scrolledtext # conlsole box
+from tkinter import * # to make GUI
+from tkinter import filedialog # to open a dialog to select a directory
+from tkinter import messagebox # to show a warning message
+from tkinter import scrolledtext # to create a scrollable text box
 
 import run_class
 import os # to get the list of files in a directory
 
-dir = None # variable, store the path of the directory
-file_list = [] # list, store the files
+# --------------------- Variables ---------------------
+dir = None # Variable, to store the path of the directory
+file_list = [] # List, to store the files
 
-def fileGetter(): #btn1
-    dir = filedialog.askdirectory(initialdir = "./", title = "Select a directory")
+# -------------------- GUI Window ---------------------
+root = tk.Tk() # Create a window
+
+root.geometry("272x170") # Set the size of the window
+root.attributes('-topmost', True) # Keep the window on top
+root.resizable(False, False) # Disable resizing of the window
+root.overrideredirect(True) # Remove the title bar
+
+# --------------------- List Box ----------------------
+runlist = Listbox(root, width = 20, height = 5) # Create a listbox
+
+runlist.place(x = 5, y = 10)
+
+# -------------- Get file list(Button1) ---------------
+def fileGetter():
+    dir = filedialog.askdirectory(initialdir = "COMSC330_Project/Data", title = "Select a directory") # Open a dialog to select a directory
     
     if dir == '':
         messagebox.showwarning("Warning", "No directory selected")
@@ -21,50 +36,51 @@ def fileGetter(): #btn1
         log = "No directory has loaded.\n"
         ResultViewlabel_ScrollBox.insert(tk.END, log)
     else:
-        run_file = os.listdir(dir) # get the list of files in the directory
-        runlist.delete(0, tk.END) # clear listbox
+        run_file = os.listdir(dir) # Get the list of files in the directory
+        runlist.delete(0, tk.END) # Clear the listbox
         
         log = f"['{dir}'] has loaded.\n"
         ResultViewlabel_ScrollBox.insert(tk.END, log)
         
         for file in run_file:
-            if file.endswith(".run"): # only add .run files on the listbox
+            if file.endswith(".run"): # Only add .run files on the listbox
                 runlist.insert(tk.END, file)
 
-def fileSetter(): # btn2
-    selection = runlist.curselection() # get the selected file
+# --------------------- Button(1) ---------------------
+btn1 = Button(root, text = "Load", fg = "red", comman = fileGetter, width = 5, height = 1) # Create a button
+
+btn1.place(x = 190, y = 7)
+
+# -------------- Set file list(Button2) ---------------
+def fileSetter():
+    selection = runlist.curselection() # Get the selected file
     
     if selection:
-        selected_file = runlist.get(selection[0]) # get the name of the file
+        selected_file = runlist.get(selection[0]) # Get the name of the selected file
+        all = [] # if it has {}, error occurrs. It has to be a list
         
-        with open('results.txt', 'w') as outFile: # open a file to write the results (at run_class.py)
-            run_class.run(selected_file, outFile) # run file
+        with open('results.txt', 'w') as outFile: # Open a file to write the results (at run_class.py)
+            run_class.run(selected_file, outFile, all) # Run the selected file
             
         log = f"Successfully ran {selected_file}\n"
         ResultViewlabel_ScrollBox.insert(tk.END, log)
 
-def closing(): #btn3
-    root.destroy() # exit window
+# --------------------- Button(2) ---------------------
+btn2 = Button(root, text = "Calculate", fg = "blue", command = fileSetter, width = 5, height = 1) # Create a button
 
-root = tk.Tk() # create a window
-root.geometry("272x170") # set the size
-root.attributes('-topmost', True) # keep the window on top
-root.resizable(False, False) # disable resizing
-root.overrideredirect(True) # remove the title bar
-
-runlist = Listbox(root, width = 20, height = 5) # listbox
-runlist.place(x = 5, y = 10)
-
-btn1 = Button(root, text = "Load", fg = "red", comman = fileGetter, width = 5, height = 1) # button(Load)
-btn1.place(x = 190, y = 7)
-
-btn2 = Button(root, text = "Calculate", fg = "blue", command = fileSetter, width = 5, height = 1) # button(Clac)
 btn2.place(x = 190, y = 37)
 
-btn3 = Button(root, text = "Exit", fg = "green", command = closing, width = 5, height = 1) # button(Exit)
+# --------------- Close window(Button3) ---------------
+def closing():
+    root.destroy() # Close the window
+
+# --------------------- Button(3) ---------------------
+btn3 = Button(root, text = "Exit", fg = "green", command = closing, width = 5, height = 1) # Create a button
+
 btn3.place(x = 190, y = 67)
 
-ResultViewlabel_ScrollBox = scrolledtext.ScrolledText(width = 34, height = 4, wrap = tk.WORD, font = ('Normal', 11)) # console box
+# ------------------- Result Console ------------------
+ResultViewlabel_ScrollBox = scrolledtext.ScrolledText(width = 34, height = 4, wrap = tk.WORD, font = ('Normal', 11)) # Create a console for log
 ResultViewlabel_ScrollBox.place(x = 3, y = 100)
 
-root.mainloop() # run
+root.mainloop() # Run the window
