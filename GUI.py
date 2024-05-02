@@ -1,5 +1,5 @@
 # !!!!!!! for running, add 'if name == "main":' above the 'main()' in run_class.py. !!!!!!
-
+# !!!!!!! if you wanna test with this code, go terminal and enter 'brew install python3-tk' !!!!!
 import tkinter as tk
 from tkinter import * # to make GUI
 from tkinter import filedialog # to open a dialog to select a directory
