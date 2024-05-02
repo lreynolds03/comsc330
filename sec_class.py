@@ -18,13 +18,12 @@ def sec(secFile, outFile, tempMulti): # secFile is the file name of the section 
     f = f.split(',') # splits each element between commas
 
     ch = f[0][-3:] 
-    course = f[0][0:-6]
+    course = f[0][0:-5]
 
     temp = []
     temp.append(course)
     temp.append(ch)
-    print(temp)
-
+    # print(temp)
 
     studentInfo = []
     studentInfo.append(temp)
@@ -37,17 +36,5 @@ def sec(secFile, outFile, tempMulti): # secFile is the file name of the section 
     # call calculation class
     results = c.mainGPA(studentInfo, tempMulti)
     r = results[2:]
+
     return r
-
-
-'''
-def main():
-
-    file = input('Enter the name of the file you want to run: ')
-    outFile = 0
-    tempMulti = []
-    sec(file, outFile, tempMulti)
-
-main()
-
-'''
