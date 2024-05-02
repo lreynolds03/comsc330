@@ -1,4 +1,4 @@
-# !!!!!!! for running, add 'if main() == "main":' above the 'main()' in run_class.py. !!!!!!
+# !!!!!!! for running, add 'if __name__=="__main__":' above the 'main()' in run_class.py. !!!!!!
 # !!!!!!! if you wanna test with this code, go terminal and enter 'brew install python3-tk' !!!!!
 import tkinter as tk
 from tkinter import * # to make GUI
