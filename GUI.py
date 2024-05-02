@@ -28,7 +28,7 @@ runlist.place(x = 5, y = 10)
 
 # -------------- Get file list(Button1) ---------------
 def fileGetter():
-    dir = filedialog.askdirectory(initialdir = "COMSC330_Project/Data", title = "Select a directory") # Open a dialog to select a directory
+    dir = filedialog.askdirectory(title = "Select a directory") # Open a dialog to select a directory
     
     if dir == '':
         messagebox.showwarning("Warning", "No directory selected")
@@ -57,10 +57,7 @@ def fileSetter():
     
     if selection:
         selected_file = runlist.get(selection[0]) # Get the name of the selected file
-        # all = [] # if it has {}, error occurrs. It has to be a list
         
-        #with open('results.txt', 'w') as outFile: # Open a file to write the results (at run_class.py)
-            #run_class.run(selected_file, outFile, all) # Run the selected file
         run_class.main(selected_file) # Run the selected file
             
         log = f"Successfully ran {selected_file}\n"
