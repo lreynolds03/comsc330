@@ -1,12 +1,10 @@
-# !!!!!!! for running, add 'if __name__=="__main__":' above the 'main()' in run_class.py. !!!!!!
+# !!!!!!! for running, add 'if name == "main":' above the 'main()' in run_class.py. !!!!!!
 # !!!!!!! if you wanna test with this code, go terminal and enter 'brew install python3-tk' !!!!!
 import tkinter as tk
 from tkinter import * # to make GUI
 from tkinter import filedialog # to open a dialog to select a directory
 from tkinter import messagebox # to show a warning message
 from tkinter import scrolledtext # to create a scrollable text box
-
-from organization import organization # to use organization(Student Grade Breakdown)
 
 import run_class
 import os # to get the list of files in a directory
@@ -20,7 +18,7 @@ root = tk.Tk() # Create a window
 
 root.geometry("272x170") # Set the size of the window
 root.attributes('-topmost', True) # Keep the window on top
-root.resizable(False, False) # Disable resizing of the window
+root.resizable(True, True) # Disable resizing of the window
 root.overrideredirect(True) # Remove the title bar
 
 # --------------------- List Box ----------------------
@@ -30,7 +28,7 @@ runlist.place(x = 5, y = 10)
 
 # -------------- Get file list(Button1) ---------------
 def fileGetter():
-    dir = filedialog.askdirectory(title = "Select a directory") # Open a dialog to select a directory
+    dir = filedialog.askdirectory(initialdir = "COMSC330_Project/Data", title = "Select a directory") # Open a dialog to select a directory
     
     if dir == '':
         messagebox.showwarning("Warning", "No directory selected")
@@ -54,36 +52,14 @@ btn1 = Button(root, text = "Load", fg = "red", comman = fileGetter, width = 5, h
 btn1.place(x = 190, y = 7)
 
 # -------------- Set file list(Button2) ---------------
-def breakdown(outFile, temp, des): # to write grade breakdown
-    if len(temp) == 0: # if there is no student(temp: grade list)
-        outFile.write(f'\nNo students with {des}') # des: range for grade
-    else:
-        outFile.write(f'\nStudents with {des}: ')
-        for row in temp:
-            outFile.write('\n')
-            for count, info in enumerate(row):
-                if count == 0:
-                    outFile.write(f'{info}: ')
-                else:
-                    outFile.write(f'\t{info}')
-        outFile.write('\n')
-
 def fileSetter():
-    selection = runlist.curselection()  # Get the selected file
-
+    selection = runlist.curselection() # Get the selected file
+    
     if selection:
-        selected_file = runlist.get(selection[0])  # Get the name of the selected file
-        all = [] # have to be [] (to use list)
-
-        with open('results.txt', 'w') as outFile:  # Open a file to write the results
-            results = run_class.run(selected_file, outFile, all)  # Run the selected file
-
-            # call the organization
-            A, D = organization(results)
-            outFile.write('Student Grade Breakdown:\n')
-            breakdown(outFile, A, "more than one A or A-")
-            breakdown(outFile, D, "more than one D-, D, D+, or F")
-
+        selected_file = runlist.get(selection[0]) # Get the name of the selected file
+        
+        run_class.main(selected_file) # Run the selected file
+            
         log = f"Successfully ran {selected_file}\n"
         ResultViewlabel_ScrollBox.insert(tk.END, log)
 
