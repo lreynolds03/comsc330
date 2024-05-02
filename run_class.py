@@ -3,7 +3,6 @@ RUN class
 """
 
 from grp_class import grp
-import re # necessary to remove quotes from student info
 
 def run(runFile, outFile, all): # runFile is the file name of the run file
 
@@ -19,13 +18,10 @@ def run(runFile, outFile, all): # runFile is the file name of the run file
     for i in range(1, len(f)):
         grp_array.append(f[i]) # creates array full of .grp files
 
-    # print(grp_array)
-
-
     for grpFile in range(0, len(grp_array)):
         outFile.write('Group:\t')
         outFile.write(str(grp_array[grpFile][0:-4])) # writes name of .grp file to results.txt
-        outFile.write('\n')
+        outFile.write('\nGroup GPA: \n')
         results = grp(grp_array[grpFile], outFile, all) # runs grp class for every .grp file in array
 
     return results
