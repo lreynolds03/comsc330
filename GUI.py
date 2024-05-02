@@ -18,7 +18,7 @@ root = tk.Tk() # Create a window
 
 root.geometry("272x170") # Set the size of the window
 root.attributes('-topmost', True) # Keep the window on top
-root.resizable(False, False) # Disable resizing of the window
+root.resizable(True, True) # Disable resizing of the window
 root.overrideredirect(True) # Remove the title bar
 
 # --------------------- List Box ----------------------
@@ -57,10 +57,11 @@ def fileSetter():
     
     if selection:
         selected_file = runlist.get(selection[0]) # Get the name of the selected file
-        all = [] # if it has {}, error occurrs. It has to be a list
+        # all = [] # if it has {}, error occurrs. It has to be a list
         
-        with open('results.txt', 'w') as outFile: # Open a file to write the results (at run_class.py)
-            run_class.run(selected_file, outFile, all) # Run the selected file
+        #with open('results.txt', 'w') as outFile: # Open a file to write the results (at run_class.py)
+            #run_class.run(selected_file, outFile, all) # Run the selected file
+        run_class.main(selected_file) # Run the selected file
             
         log = f"Successfully ran {selected_file}\n"
         ResultViewlabel_ScrollBox.insert(tk.END, log)
