@@ -19,13 +19,15 @@ def run(runFile, outFile, all): # runFile is the file name of the run file
     for i in range(1, len(f)):
         grp_array.append(f[i]) # creates array full of .grp files
 
-    print(grp_array)
+    # print(grp_array)
 
 
     for grpFile in range(0, len(grp_array)):
-        outFile.write(str(grp_array[grpFile])) # writes name of .grp file to results.txt
+        outFile.write('Group:\t')
+        outFile.write(str(grp_array[grpFile][0:-4])) # writes name of .grp file to results.txt
         outFile.write('\n')
         results = grp(grp_array[grpFile], outFile, all) # runs grp class for every .grp file in array
+
     return results
 
 def main():
@@ -34,36 +36,26 @@ def main():
 
         # create results text file
     with open ('results.txt', 'w') as results:
-        while file != 'quit': # loop to run program until user types 'quit'
-            all = []
-            r = run(file, results, all)
+        
+        all = []
+        r = run(file, results, all)
 
-            from organization import organization
-            number = organization(r)
-            count = 0
-            for element in number:
-                count = count + 1
-                if count == 1:
-                    A = element
-                elif count == 2:
-                    AMinus = element
-                elif count == 3:
-                    DPlus = element
-                elif count == 4:
-                    D = element
-                elif count == 5:
-                    DMinus = element
-                elif count == 6:
-                    F = element
+        from organization import organization
+        number = organization(r)
+        count = 0
+        for element in number:
+            count = count + 1
+            if count == 1:
+                A = element
+            elif count == 2:
+                D = element
 
-            print('A: ', A)
-            print('AMinus: ', AMinus)
-            print('DPlus: ', DPlus)
-            print('D: ', D)
-            print('DMinus: ', DMinus)
-            print('F', F)
+        results.write('Student Grade Breakdown:\n')
 
-            results.write('\nStudents with more than one A: ')
+        if len(A) == 0:
+            results.write('\nNo students with more than one D-, D, D+, or F')
+        elif len(A) > 0:
+            results.write('\nStudents with more than one A or A-: ')
             for row in A:
                 count = 0
                 for element in row:
@@ -76,33 +68,11 @@ def main():
                         results.write(str(element))
                     count = count + 1
             results.write('\n')
-            results.write('\nStudents with more than one A-: ')
-            for row in AMinus:
-                count = 0
-                for element in row:
-                    if count == 1:
-                        results.write('\n')
-                        results.write(str(element))
-                        results.write(': ')
-                    elif count >= 2:
-                        results.write('\t')
-                        results.write(str(element))
-                    count = count + 1
-            results.write('\n')
-            results.write('\nStudents with more than one D+: ')
-            for row in DPlus:
-                count = 0
-                for element in row:
-                    if count == 1:
-                        results.write('\n')
-                        results.write(str(element))
-                        results.write(': ')
-                    elif count >= 2:
-                        results.write('\t')
-                        results.write(str(element))
-                    count = count + 1
-            results.write('\n')
-            results.write('\nStudents with more than one D: ')
+
+        if len(D) == 0:
+            results.write('\nNo students with more than one D-, D, D+, or F')
+        elif len(D) > 0:
+            results.write('\nStudents with more than one D-, D, D+, or F: ')
             for row in D:
                 count = 0
                 for element in row:
@@ -115,37 +85,7 @@ def main():
                         results.write(str(element))
                     count = count+1
             results.write('\n')
-            results.write('\nStudents with more than one D-: ')
-            for row in DMinus:
-                count = 0
-                for element in row:
-                    if count == 1:
-                        results.write('\n')
-                        results.write(str(element))
-                        results.write(': ')
-                    elif count >= 2:
-                        results.write('\t')
-                        results.write(str(element))
-                    count = count + 1
-            results.write('\n')
-            results.write('\nStudents with more than one F: ')
-            for row in F:
-                count = 0
-                for element in row:
-                    if count == 1:
-                        results.write('\n')
-                        results.write(str(element))
-                        results.write(': ')
-                    elif count >= 2:
-                        results.write('\t')
-                        results.write(str(element))
-                    count = count + 1
 
-
-            file = input('Enter the name of the .run file you want to run (ex: filename.run), or type \'quit\' to exit program:\n')
-
-            if file == 'quit':
-
-                results.close()
+    results.close()
 
 main()
