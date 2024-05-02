@@ -6,7 +6,6 @@ Run SEC class for each SEC file
 """
 
 from sec_class import sec
-#import math_class
 
 def grp(grpFile, outFile, all): # grpFile is the file name of the group file
 
@@ -21,19 +20,15 @@ def grp(grpFile, outFile, all): # grpFile is the file name of the group file
     for i in range(1, len(f)-1):
         sec_array.append(f[i]) # creates array full of .sec files
 
-    print(sec_array)
+    # print(sec_array)
 
     for file in range(0, len(sec_array)):
+        outFile.write(str(sec_array[file][0:-4])) # writes name of .grp file to results.txt
+        outFile.write('\n')
         results = sec(sec_array[file], outFile, all) # runs sec class for every .sec file in array
         all.append(results)
+
+    outFile.write('\n')
+
     return all
 
-"""
-def main():
-
-    file = input('Enter the name of the file you want to run: ')
-    print('\n')
-    grp(file)
-
-main()
-"""
