@@ -27,7 +27,7 @@ def run(runFile, outFile, all): # runFile is the file name of the run file
     return results
 
 def main():
-
+# def main(file): # !!!!!! relplace upper line and delete under line if run it through GUI.py !!!!!!
     file = input('Enter the name of the .run file you want to run (ex: filename.run), or type \'quit\' to exit program:\n')
 
         # create results text file
@@ -84,4 +84,5 @@ def main():
 
     results.close()
 
+# if __name__=="__main__": # !!!!!! add this line and insert TAB under line if run it through GUI.py !!!!!!
 main()
