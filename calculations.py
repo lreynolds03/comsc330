@@ -1,21 +1,17 @@
 import math
 
-
-
 def add(s, ID, course, tempMulti):
     count = 0
     array = []
-    print(type(tempMulti))
     # Checks if tempMulti is empty
     if len(tempMulti) == 0:
-        print("length == 0")
         # adds in a new array with students:
         # grade
-        array.insert(0,s)
+        array.insert(0, s)
         # ID
-        array.insert(1,ID)
+        array.insert(1, ID)
         # and Course
-        array.insert(2,course)
+        array.insert(2, course)
         # appends array to main, tempMulti
         tempMulti.append(array)
     else:
@@ -28,12 +24,10 @@ def add(s, ID, course, tempMulti):
                 # if so, increase count to indicate already in array
                 sCount = sCount+1
                 if row[1] == ID:
-                    print("row == ID")
                     idCount = idCount+1
                     for val in row:
                         if val == course:
                             count = count+1
-                            print('count', count)
                     if count < 1:
                         row.append(course)
 
@@ -58,7 +52,6 @@ def add(s, ID, course, tempMulti):
 
 # calculates GPA of given section
 def GPA(ID, course, s, ch, individualGPA, tempMulti, sumPoints):
-    print('temp', tempMulti)
     if s == 'A':
         # calculate GPA given credit hours
         gpa = ch * 4.0
@@ -161,11 +154,35 @@ def difOfSquares(average, gpa, sum):
     sum += sqdif
     return sum
     # end
+
+def signif(average, array, significant):
+    print (array)
+    print (significant)
+    # initialize sum
+    sum = 0
+
+    # calculates difference of sums
+    for val in array:
+        sum += difOfSquares(average, val, sum)
+
+    # calculate standard deviation (square root of sum/n-1)
+
+    sd = math.sqrt(sum / (len(array) - 1))
+
+    # calculate zscore for each element in gpa Array
+    for val in array:
+        z = zScore(average, val, sd)
+        # print element if zscore is significant
+        if (z <= -2) or (z >= 2):
+            significant.append(val)
+            significant(z)
+
+    return significant
+
 def mainGPA(array, tempMulti):
     # initialize variables
     totalHours = 0
     sumPoints = 0.0
-    sum = 0
     course = ''
     ch = 0
     # array of unweighted GPA values
@@ -191,10 +208,8 @@ def mainGPA(array, tempMulti):
 
             # ID is always second to last position
             ID = row[length-2]
-            print('id: ', ID)
             # s is always last position
             s = row[length-1]
-            print('s: ', s)
 
             results = GPA(ID, course, s, ch, individualGPA, tempMulti, sumPoints)
             totalHours = totalHours + ch
@@ -210,23 +225,6 @@ def mainGPA(array, tempMulti):
 
     average = calcAverageGPA(totalHours, sumPoints)
 
-    # calculates difference of sums
-    for val in individualGPA:
-        sum += difOfSquares(average, val, sum)
-
-    # calculate standard deviation (square root of sum/n-1)
-
-    sd = math.sqrt(sum / (len(individualGPA)- 1))
-
-    # calculate zscore for each element in gpa Array
-    for val in individualGPA:
-        z = zScore(average, val, sd)
-        # print element if zscore is significant
-        if (z<=-2) or (z>=2):
-            significant.append("\n",val, "is significant with a zscore of: ", z)
-            print(val, "is significant with a zscore of: ", z)
-
-
-
+    significant = signif(average, individualGPA, significant)
 
     return average, significant, tempMulti

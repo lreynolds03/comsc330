@@ -23,9 +23,32 @@ def grp(grpFile, outFile, all): # grpFile is the file name of the group file
 
     print(sec_array)
 
+    sectionAverage = []
+    sectionSum = 0
+
     for file in range(0, len(sec_array)):
-        results = sec(sec_array[file], outFile, all) # runs sec class for every .sec file in array
-        all.append(results)
+        results = sec(sec_array[file], outFile, sectionAverage, all) # runs sec class for every .sec file in array
+        sectionAverage.append(results[0])
+        signif = results[1]
+        all.append(results[2])
+
+    length = len(sectionAverage)
+    print('section average', sectionAverage)
+
+    import calculations as c
+
+    count = 0
+    for x in sectionAverage:
+        count =count+1
+        if count%2 == 1:
+            sum = sum + x
+
+    groupAverage = c.calcAverageGPA(length, sectionSum)
+    print(groupAverage)
+
+
+
+
     return all
 
 """
@@ -37,3 +60,6 @@ def main():
 
 main()
 """
+
+
+

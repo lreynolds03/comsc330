@@ -15,12 +15,4 @@ GGRfCMk: 	COMSC125.00	ENGR123.002
 GGkuQlR: 	COMSC125.00	ENGR123.002
 GGRMRRC: 	COMSC125.00	ENGR123.002
 
-Students with more than one A-: 
-
-Students with more than one D+: 
-
-Students with more than one D: 
-
-Students with more than one D-: 
-
-Students with more than one F: 
+Students with more than one A: 

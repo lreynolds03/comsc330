@@ -46,22 +46,8 @@ def main():
                 if count == 1:
                     A = element
                 elif count == 2:
-                    AMinus = element
-                elif count == 3:
-                    DPlus = element
-                elif count == 4:
                     D = element
-                elif count == 5:
-                    DMinus = element
-                elif count == 6:
-                    F = element
 
-            print('A: ', A)
-            print('AMinus: ', AMinus)
-            print('DPlus: ', DPlus)
-            print('D: ', D)
-            print('DMinus: ', DMinus)
-            print('F', F)
 
             results.write('\nStudents with more than one A: ')
             for row in A:
@@ -75,34 +61,9 @@ def main():
                         results.write('\t')
                         results.write(str(element))
                     count = count + 1
-            results.write('\n')
-            results.write('\nStudents with more than one A-: ')
-            for row in AMinus:
-                count = 0
-                for element in row:
-                    if count == 1:
-                        results.write('\n')
-                        results.write(str(element))
-                        results.write(': ')
-                    elif count >= 2:
-                        results.write('\t')
-                        results.write(str(element))
-                    count = count + 1
-            results.write('\n')
-            results.write('\nStudents with more than one D+: ')
-            for row in DPlus:
-                count = 0
-                for element in row:
-                    if count == 1:
-                        results.write('\n')
-                        results.write(str(element))
-                        results.write(': ')
-                    elif count >= 2:
-                        results.write('\t')
-                        results.write(str(element))
-                    count = count + 1
-            results.write('\n')
-            results.write('\nStudents with more than one D: ')
+            if len(A) != 0:
+                results.write('\n')
+                results.write('\nStudents with more than one A: ')
             for row in D:
                 count = 0
                 for element in row:
@@ -114,32 +75,9 @@ def main():
                         results.write('\t')
                         results.write(str(element))
                     count = count+1
-            results.write('\n')
-            results.write('\nStudents with more than one D-: ')
-            for row in DMinus:
-                count = 0
-                for element in row:
-                    if count == 1:
-                        results.write('\n')
-                        results.write(str(element))
-                        results.write(': ')
-                    elif count >= 2:
-                        results.write('\t')
-                        results.write(str(element))
-                    count = count + 1
-            results.write('\n')
-            results.write('\nStudents with more than one F: ')
-            for row in F:
-                count = 0
-                for element in row:
-                    if count == 1:
-                        results.write('\n')
-                        results.write(str(element))
-                        results.write(': ')
-                    elif count >= 2:
-                        results.write('\t')
-                        results.write(str(element))
-                    count = count + 1
+            if len(D) != 0:
+                results.write('\n')
+                results.write('\nStudents with more than one D: ')
 
 
             file = input('Enter the name of the .run file you want to run (ex: filename.run), or type \'quit\' to exit program:\n')
