@@ -38,6 +38,9 @@ def sec(secFile, outFile, sectionAverage, tempMulti): # secFile is the file name
     # call calculation class
     results = c.mainGPA(studentInfo, tempMulti)
 
+    # credit hour
+    ch = results[3]
+    sectionAverage.append(ch)
     # average
     average = results[0]
     sectionAverage.append(average)
@@ -47,6 +50,8 @@ def sec(secFile, outFile, sectionAverage, tempMulti): # secFile is the file name
 
     # multiples
     r = results[2]
+
+
 
     return sectionAverage, sig, r
 

@@ -7,7 +7,6 @@ Run SEC class for each SEC file
 
 from sec_class import sec
 #import math_class
-
 def grp(grpFile, outFile, all): # grpFile is the file name of the group file
 
     with open(grpFile, 'r') as file:
@@ -24,32 +23,46 @@ def grp(grpFile, outFile, all): # grpFile is the file name of the group file
     print(sec_array)
 
     sectionAverage = []
-    sectionSum = 0
 
     for file in range(0, len(sec_array)):
         results = sec(sec_array[file], outFile, sectionAverage, all) # runs sec class for every .sec file in array
         sectionAverage.append(results[0])
-        signif = results[1]
+        significant = results[1]
         all.append(results[2])
 
-    length = len(sectionAverage)
-    print('section average', sectionAverage)
-
     import calculations as c
-
+    import array as a
     count = 0
+    ch = 0
+    section = []
+
+
     for x in sectionAverage:
         count =count+1
-        if count%2 == 1:
-            sum = sum + x
+        if count%3 == 1:
+            # append credit hours
+            ch = ch+1
+        elif count%3 == 2:
+            # append average section GPA
+            section.append(x)
 
-    groupAverage = c.calcAverageGPA(length, sectionSum)
-    print(groupAverage)
+    count = 0
+    for file in range(0, len(sec_array)):
+        outFile.write('\t')
+        outFile.write(str(sec_array[file][0:-4]))  # writes name of .grp file to results.txt
+        outFile.write(', GPA: \t')
+        outFile.write(str('%.2f'%section[count]))
+        outFile.write('\n')
+        count = count+1
 
+    outFile.write('\n')
 
+    from array import array
+    section = array('f', section)
+    groupAverage = c.calcAverageGPA(ch, section)
+    value = c.signif(groupAverage, section, significant)
 
-
-    return all
+    return all, value, groupAverage, ch
 
 """
 def main():
