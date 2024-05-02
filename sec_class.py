@@ -5,9 +5,6 @@ Read in a section file
 return 2D array
 """
 
-import re   # necessary to remove quotes from student info
-
-
 def sec(secFile, outFile, tempMulti): # secFile is the file name of the section file
 
     with open (secFile, 'r') as file:
@@ -17,16 +14,15 @@ def sec(secFile, outFile, tempMulti): # secFile is the file name of the section 
     f = f.replace('\n', ',') # replaces each new line symbol with a comma
     f = f.split(',') # splits each element between commas
 
-    ch = f[0][-3:] 
-    course = f[0][0:-5]
+    ch = f[0][-3:]  # Credit hours for the course
+    course = f[0][0:-5]  # Course name
 
-    temp = []
+    temp = [] # Temporary array to add ch and course
     temp.append(course)
     temp.append(ch)
-    # print(temp)
 
-    studentInfo = []
-    studentInfo.append(temp)
+    studentInfo = [] # Holds all 
+    studentInfo.append(temp) # adding course and credit hours to be the first array of 
 
     for i in range(1, len(f)-1, 4): # i = 1-4, 5-8, 9-12, etc.
         studentInfo.append(f[i:i+4]) # Groups four items at a time starting at first students last name  
