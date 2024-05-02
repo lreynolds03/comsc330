@@ -48,12 +48,12 @@ def run(runFile, outFile, all): # runFile is the file name of the run file
     return all
 
 def main():
-    file = input(
-        'Enter the name of the .run file you want to run (ex: filename.run), or type \'quit\' to exit program:\n')
+# def main(file): # !!!!!! relplace upper line and delete under line if run it through GUI.py !!!!!!
+    file = input('Enter the name of the .run file you want to run (ex: filename.run), or type \'quit\' to exit program:\n')
 
-    # create results text file
-    with open('results.txt', 'w') as results:
-
+        # create results text file
+    with open ('results.txt', 'w') as results:
+        
         all = []
         r = run(file, results, all)
 
@@ -70,7 +70,7 @@ def main():
         results.write('Student Grade Breakdown:\n')
 
         if len(A) == 0:
-            results.write('\nNo students with more than one A or A-')
+            results.write('\nNo students with more than one D-, D, D+, or F')
         elif len(A) > 0:
             results.write('\nStudents with more than one A or A-: ')
             for row in A:
@@ -100,10 +100,10 @@ def main():
                     elif count >= 2:
                         results.write('\t')
                         results.write(str(element))
-                    count = count + 1
+                    count = count+1
             results.write('\n')
 
     results.close()
 
-
+# if __name__=="__main__": # !!!!!! add this line and insert TAB under line if run it through GUI.py !!!!!!
 main()
